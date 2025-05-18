@@ -1,0 +1,67 @@
+﻿@page "/Produkty"
+
+<PageTitle>Produkty</PageTitle>
+
+<h1>Produkty</h1>
+<div class="d-flex justify-content-between">
+    <div class="d-flex flex-column">
+        <label>Název produktu <input type="text" @bind-value="Produkt.Nazev" /></label>
+        <p class="alert-danger">@Produkt.ChybaCenaBezDph</p>
+        <label>Cena bez DPH <input type="number" @bind-value="Produkt.CenaBezDph" /></label>
+        <p class="alert-danger">@Produkt.ChybaDph</p>
+        <label>DPH <input type="number" @bind-value="Produkt.Dph" /></label>
+        <p class="alert-danger">@Produkt.ChybaMnozstvi</p>
+        <label>Množství <input type="number" @bind-value="Produkt.Mnozstvi" /></label>
+        <br />
+        <label>Název @Produkt.Nazev</label>
+        <label>Cena bez DPH @Produkt.CenaBezDph</label>
+        <label>Cena s DPH @Produkt.CenaSdpH</label>
+        <label>DPH @Produkt.Dph</label>
+        <label>Množství na skladě @Produkt.Mnozstvi</label>
+        <label>Cena s DPH na skladě @Produkt.CenaNaSklade</label>
+    </div>
+    <br />
+    <div class="d-flex flex-column">
+        <label>Název produktu <input type="text" @bind-value="Produkt2.Nazev" /></label>
+        <p class="alert-danger">@Produkt2.ChybaCenaBezDph</p>
+        <label>Cena bez DPH <input type="number" @bind-value="Produkt2.CenaBezDph" /></label>
+        <p class="alert-danger">@Produkt2.ChybaDph</p>
+        <label>DPH <input type="number" @bind-value="Produkt2.Dph" /></label>
+        <p class="alert-danger">@Produkt2.ChybaMnozstvi</p>
+        <label>Množství <input type="number" @bind-value="Produkt2.Mnozstvi" /></label>
+        <br />
+        <label>Název @Produkt2.Nazev</label>
+        <label>Cena bez DPH @Produkt2.CenaBezDph</label>
+        <label>Cena s DPH @Produkt2.CenaSdpH</label>
+        <label>DPH @Produkt2.Dph</label>
+        <label>Množství na skladě @Produkt2.Mnozstvi</label>
+        <label>Cena s DPH na skladě @Produkt2.CenaNaSklade</label>
+    </div>
+</div>
+<br />
+
+<h2>Porovnání</h2>
+
+@if(Produkt.CenaNaSklade > Produkt2.CenaNaSklade)
+            {
+                <p>Produkt jedna má vyší hodnotu o @(Produkt.CenaNaSklade - Produkt2.CenaNaSklade)</p>
+            }
+
+else if (Produkt.CenaNaSklade < Produkt2.CenaNaSklade)
+            {
+                <p>Produkt dva má vyší hodnotu o @(Math.Abs(Produkt2.CenaNaSklade - Produkt.CenaNaSklade))</p>
+            }
+else
+            {
+                <p>oba produkty mají stejně</p>
+            }
+
+@if (Produkt.CenaNaSklade != 0 || Produkt2.CenaNaSklade != 0)
+{
+    <p>Podíl produktu 1 na skladové ceně (s DPH): @(Math.Round((Produkt.CenaNaSklade / (Produkt.CenaNaSklade + Produkt2.CenaNaSklade)) * 100, 2)) %</p>
+}
+@code {
+    public Models.Produkt Produkt { get; set; } = new Models.Produkt();
+    public Models.Produkt Produkt2 { get; set; } = new Models.Produkt();
+
+}
